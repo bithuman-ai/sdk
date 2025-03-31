@@ -13,8 +13,8 @@ import websockets
 from livekit import api, rtc
 from loguru import logger
 
-from bithuman_runtime import AsyncBithumanRuntime
-from bithuman_runtime.utils import FPSController
+from bithuman import AsyncBithuman
+from bithuman.utils import FPSController
 
 logger.remove()
 logger.add(sys.stdout, level="INFO")
@@ -32,7 +32,7 @@ class BithumanLiveKitStreamer:
 
     def __init__(
         self,
-        runtime: AsyncBithumanRuntime,
+        runtime: AsyncBithuman,
         livekit_url: str,
         api_key: str,
         api_secret: str,
@@ -335,8 +335,8 @@ async def main(args: argparse.Namespace) -> None:
     assert args.avatar_model, "Avatar model is required"
 
     # Create Bithuman runtime
-    runtime = AsyncBithumanRuntime(token=args.token)
-    await runtime.set_avatar_model(args.avatar_model)
+    runtime = AsyncBithuman(token=args.token)
+    await runtime.set_model(args.avatar_model)
 
     # Create streamer
     streamer = BithumanLiveKitStreamer(
